@@ -29,6 +29,38 @@
       color: #333;
       font-size: 16px;
     }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    /* 表单控件样式 */
+    .search-form input[type="text"],.search-form select {
+      margin-right: 10px;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px;
+    }
+
+    /* 按钮样式 */
+    .search-form button {
+      padding: 5px 15px;
+      margin-left: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* 清空按钮样式 */
+    .search-form button.clear {
+      background-color: #6c757d;
+    }
   </style>
 </head>
 <body>
@@ -37,5 +69,25 @@
     <h1>Tlias智能学习辅助系统</h1>
     <a href="#">退出登录</a>
    </div>
+
+  <!-- 搜索表单 -->
+  <form class="search-form">
+    <input type="text" name="name" placeholder="姓名"/>
+    <select name="gender">
+      <option value="">性别</option>
+      <option value="1">男</option>
+      <option value="2">女</option>
+    </select>
+    <select name="job">
+      <option value="">职位</option>
+      <option value="1">班主任</option>
+      <option value="2">讲师</option>
+      <option value="3">学工主管</option>
+      <option value="4">教研主管</option>
+      <option value="5">咨询师</option>
+    </select>
+    <button type="submit">查询</button>
+    <button type="reset" class="clear">清空</button>
+  </form>
 </body>
 </html>
