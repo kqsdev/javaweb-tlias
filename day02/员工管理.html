@@ -178,6 +178,7 @@
     </footer>
   </div>
 
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="module">
       import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
       createApp({
@@ -188,39 +189,21 @@
               gender: '',
               job: ''
             },
-            empList: [
-              { "id": 1,
-                "name": "谢逊",
-                "image": "https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/4.jpg",
-                "gender": 1,
-                "job": "1",
-                "entrydate": "2023-06-09",
-                "updatetime": "2024-07-30T14:59:38"
-              },
-              {
-                "id": 2,
-                "name": "韦一笑",
-                "image": "https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/1.jpg",
-                "gender": 1,
-                "job": "1",
-                "entrydate": "2020-05-09",
-                "updatetime": "2023-07-01T00:00:00"
-              },
-              {
-                "id": 3,
-                "name": "黛绮丝",
-                "image": "https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/2.jpg",
-                "gender": 2,
-                "job": "2",
-                "entrydate": "2021-06-01",
-                "updatetime": "2023-07-01T00:00:00"
-              }
-            ]
+            empList: []
           }
         },
         methods: {
-          search() {
-            console.log(this.searchEmp)
+          // search() {
+          //   // 基于axios发送异步请求，请求https://web-server.itheima.net/emps/list，根据条件查询员工列表
+          //   axios.get(`https://web-server.itheima.net/emps/list?name=${this.searchEmp.name}&gender=${this.searchEmp.gender}&job=${this.searchEmp.job}`).then((result) => {
+          //     this.empList = result.data.data
+          //   })
+          // },
+
+          // 异步变同步，提高代码可读性和可维护性。async声明异步方法，await等待异步任务执行
+          async search() {
+            const result = await axios.get(`https://web-server.itheima.net/emps/list?name=${this.searchEmp.name}&gender=${this.searchEmp.gender}&job=${this.searchEmp.job}`);
+            this.empList = result.data.data;
           },
           clear() {
             this.searchEmp = {
