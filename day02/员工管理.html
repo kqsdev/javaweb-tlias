@@ -116,14 +116,14 @@
     </div>
 
     <!-- 搜索表单 -->
-    <form class="search-form">
-      <input type="text" name="name" placeholder="姓名"/>
-      <select name="gender">
+    <form class="search-form" action="#" method="post">
+      <input type="text" name="name" placeholder="姓名" v-model="searchEmp.name"/>
+      <select name="gender" v-model="searchEmp.gender">
         <option value="">性别</option>
         <option value="1">男</option>
         <option value="2">女</option>
       </select>
-      <select name="job">
+      <select name="job" v-model="searchEmp.job">
         <option value="">职位</option>
         <option value="1">班主任</option>
         <option value="2">讲师</option>
@@ -131,8 +131,8 @@
         <option value="4">教研主管</option>
         <option value="5">咨询师</option>
       </select>
-      <button type="submit">查询</button>
-      <button type="reset" class="clear">清空</button>
+      <button type="button" @click="search">查询</button>
+      <button type="button" @click="clear" class="clear">清空</button>
     </form>
 
     <!-- 数据展示表格 -->
@@ -149,97 +149,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>令狐冲</td>
-          <td>男</td>
-          <td><img src="https://foruda.gitee.com/avatar/1787837844263629247/17490856_kqsdev_1787837844.png!avatar200" alt="令狐冲" class="avatar"></td>
-          <td>讲师</td>
-          <td>2021-03-15</td>
-          <td>2023-07-30T12:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
+        <tr v-for="(emp, index) in empList" :key="index">
+          <td>{{ emp.name }}</td>
+          <td>{{ emp.gender === 1 ? '男' : '女' }}</td>
+          <!-- 插值表达式不能出现在标签内部 -->
+          <td><img :src="emp.image" :alt="emp.name" class="avatar"></td>
+          <td>
+            <span v-if="emp.job === '1'">班主任</span>
+            <span v-else-if="emp.job === '2'">讲师</span>
+            <span v-else-if="emp.job === '3'">学工主管</span>
+            <span v-else-if="emp.job === '4'">教研主管</span>
+            <span v-else-if="emp.job === '5'">咨询师</span>
           </td>
-        </tr>
-        <tr>
-          <td>任盈盈</td>
-          <td>女</td>
-          <td><img src="https://via.placeholder.com/50" alt="任盈盈" class="avatar"></td>
-          <td>学工主管</td>
-          <td>2020-04-10</td>
-          <td>2023-07-29T15:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
-          </td>
-        </tr>
-        <tr>
-          <td>岳不群</td>
-          <td>男</td>
-          <td><img src="https://foruda.gitee.com/avatar/1787837844263629247/17490856_kqsdev_1787837844.png!avatar200" alt="岳不群" class="avatar"></td>
-          <td>教研主管</td>
-          <td>2019-01-01</td>
-          <td>2023-07-30T10:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
-          </td>
-        </tr>
-        <tr>
-          <td>宁中则</td>
-          <td>女</td>
-          <td><img src="https://via.placeholder.com/50" alt="宁中则" class="avatar"></td>
-          <td>班主任</td>
-          <td>2018-06-01</td>
-          <td>2023-07-29T09:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
-          </td>
-        </tr>
-        <tr>
-          <td>令狐冲</td>
-          <td>男</td>
-          <td><img src="https://foruda.gitee.com/avatar/1787837844263629247/17490856_kqsdev_1787837844.png!avatar200" alt="令狐冲" class="avatar"></td>
-          <td>讲师</td>
-          <td>2021-03-15</td>
-          <td>2023-07-30T12:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
-          </td>
-        </tr>
-        <tr>
-          <td>任盈盈</td>
-          <td>女</td>
-          <td><img src="https://via.placeholder.com/50" alt="任盈盈" class="avatar"></td>
-          <td>学工主管</td>
-          <td>2020-04-10</td>
-          <td>2023-07-29T15:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
-          </td>
-        </tr>
-        <tr>
-          <td>岳不群</td>
-          <td>男</td>
-          <td><img src="https://foruda.gitee.com/avatar/1787837844263629247/17490856_kqsdev_1787837844.png!avatar200" alt="岳不群" class="avatar"></td>
-          <td>教研主管</td>
-          <td>2019-01-01</td>
-          <td>2023-07-30T10:00:00Z</td>
-          <td class="btn-group">
-            <button class="edit">编辑</button>
-            <button class="delete">删除</button>
-          </td>
-        </tr>
-        <tr>
-          <td>宁中则</td>
-          <td>女</td>
-          <td><img src="https://via.placeholder.com/50" alt="宁中则" class="avatar"></td>
-          <td>班主任</td>
-          <td>2018-06-01</td>
-          <td>2023-07-29T09:00:00Z</td>
+          <td>{{ emp.entrydate }}</td>
+          <td>{{ emp.updatetime }}</td>
           <td class="btn-group">
             <button class="edit">编辑</button>
             <button class="delete">删除</button>
@@ -255,7 +178,62 @@
     </footer>
   </div>
 
-  <script>
+  <script type="module">
+      import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+      createApp({
+        data() {
+          return {
+            searchEmp: {
+              name: '',
+              gender: '',
+              job: ''
+            },
+            empList: [
+              { "id": 1,
+                "name": "谢逊",
+                "image": "https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/4.jpg",
+                "gender": 1,
+                "job": "1",
+                "entrydate": "2023-06-09",
+                "updatetime": "2024-07-30T14:59:38"
+              },
+              {
+                "id": 2,
+                "name": "韦一笑",
+                "image": "https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/1.jpg",
+                "gender": 1,
+                "job": "1",
+                "entrydate": "2020-05-09",
+                "updatetime": "2023-07-01T00:00:00"
+              },
+              {
+                "id": 3,
+                "name": "黛绮丝",
+                "image": "https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/2.jpg",
+                "gender": 2,
+                "job": "2",
+                "entrydate": "2021-06-01",
+                "updatetime": "2023-07-01T00:00:00"
+              }
+            ]
+          }
+        },
+        methods: {
+          search() {
+            console.log(this.searchEmp)
+          },
+          clear() {
+            this.searchEmp = {
+              name: '',
+              gender: '',
+              job: ''
+            }
+          }
+        }
+      }).mount('#container')
+    </script>
+
+  <!-- <script>
     // 点击列表中每一条记录后面的删除按钮，弹出一个提示框，提示：您是否要删除这条记录？如果确定，则移除这条记录
     const deleteButtons = document.querySelectorAll('.delete');
     for (let i = 0; i < deleteButtons.length; i++) {
@@ -277,6 +255,6 @@
         this.style.backgroundColor = '#fff';
       });
     }
-  </script>
+  </script> -->
 </body>
 </html>
