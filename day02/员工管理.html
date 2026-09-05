@@ -217,6 +217,11 @@
               this.empList.splice(index, 1);
             }
           }
+        },
+        // 钩子函数
+        mounted() {
+          // 页面加载完成后，发送ajax请求，获取数据
+          this.search();
         }
       }).mount('#container')
     </script>
