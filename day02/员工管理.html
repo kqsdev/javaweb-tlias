@@ -165,7 +165,7 @@
           <td>{{ emp.updatetime }}</td>
           <td class="btn-group">
             <button class="edit">编辑</button>
-            <button class="delete">删除</button>
+            <button class="delete" @click="deleteEmp(index)">删除</button>
           </td>
         </tr>
       </tbody>
@@ -227,6 +227,11 @@
               name: '',
               gender: '',
               job: ''
+            }
+          },
+          deleteEmp(index) {
+            if (confirm('您是否要删除这条记录？')) {
+              this.empList.splice(index, 1);
             }
           }
         }
